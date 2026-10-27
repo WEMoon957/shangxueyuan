@@ -1,0 +1,114 @@
+<!-- 学习中心 -->
+<view class="page">
+  <!-- 顶部信息 -->
+  <view class="head">
+    <view class="wrap">
+      <view class="row-between">
+        <view class="grow">
+          <view class="head__hello">{{greeting}}，{{user.name}}</view>
+          <view class="head__org">{{user.storeName}} · {{user.position}}</view>
+        </view>
+        <view class="head__avatar">{{user.initial}}</view>
+      </view>
+
+      <view class="head__stats">
+        <view class="head__stat">
+          <text class="head__value num">{{stats.courses}}</text>
+          <text class="head__label">门在学</text>
+        </view>
+        <view class="head__divider"></view>
+        <view class="head__stat">
+          <text class="head__value num">{{stats.finished}}</text>
+          <text class="head__label">门已完成</text>
+        </view>
+        <view class="head__divider"></view>
+        <view class="head__stat">
+          <text class="head__value num">{{stats.minutes}}</text>
+          <text class="head__label">分钟学时</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 下一件事 -->
+  <view wx:if="{{todo}}" class="next" hover-class="next--hover" bindtap="goTodo">
+    <view class="grow">
+      <view class="next__label">{{todo.label}}</view>
+      <view class="next__title">{{todo.title}}</view>
+      <view class="next__meta">{{todo.desc}}</view>
+    </view>
+    <view class="next__go">
+      <text>{{todo.action}}</text>
+      <text class="next__chev">›</text>
+    </view>
+  </view>
+
+  <view class="wrap">
+    <!-- 筛选 -->
+    <view class="filters">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="key"
+        class="filter {{tab === item.key ? 'filter--on' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="changeTab"
+      >{{item.label}}<text class="filter__n num">{{item.count}}</text></view>
+    </view>
+
+    <!-- 加载 -->
+    <view wx:if="{{state === 'loading'}}" class="state">
+      <view class="spinner"></view>
+      <view class="state__text">正在加载课程…</view>
+    </view>
+
+    <!-- 错误 -->
+    <view wx:elif="{{state === 'error'}}" class="state">
+      <view class="state__text">{{error}}</view>
+      <view class="gap-24"></view>
+      <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="reload">重新加载</view>
+    </view>
+
+    <!-- 空 -->
+    <view wx:elif="{{courses.length === 0}}" class="state">
+      <view class="state__text">这个分类下还没有课程</view>
+    </view>
+
+    <!-- 课程列表 -->
+    <block wx:else>
+      <view
+        wx:for="{{courses}}"
+        wx:key="id"
+        class="lesson"
+        hover-class="lesson--hover"
+        data-id="{{item.id}}"
+        bindtap="openCourse"
+      >
+        <view class="lesson__head">
+          <view class="grow">
+            <view class="lesson__title">{{item.name}}</view>
+          </view>
+          <text class="lesson__state {{item.stateTone}}">{{item.actionText}} ›</text>
+        </view>
+
+        <view class="lesson__meta">
+          <text class="lesson__code num">{{item.code}}</text>
+          <text class="lesson__dot">·</text>
+          <text>{{item.category}}</text>
+          <text class="lesson__dot">·</text>
+          <text>{{item.minutes}} 分钟</text>
+          <text wx:if="{{item.percent > 0 && item.percent < 100}}" class="lesson__dot">·</text>
+          <text wx:if="{{item.percent > 0 && item.percent < 100}}">已学 {{item.percent}}%</text>
+          <text wx:if="{{item.mustLearn}}" class="lesson__must">必修</text>
+        </view>
+
+        <view wx:if="{{item.percent > 0 && item.percent < 100}}" class="lesson__bar">
+          <view class="progress"><view class="progress__bar" style="width: {{item.percent}}%"></view></view>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{demo}}" class="demo-tip">
+      演示数据 · 来自飞书「门店商学院-数据底座」快照
+    </view>
+  </view>
+</view>

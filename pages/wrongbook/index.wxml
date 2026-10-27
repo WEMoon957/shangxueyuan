@@ -1,0 +1,64 @@
+<!-- 错题本 -->
+<view class="page page--sheet">
+  <view wx:if="{{state === 'loading'}}" class="state">
+    <view class="spinner"></view>
+    <view class="state__text">正在加载错题…</view>
+  </view>
+
+  <view wx:elif="{{state === 'error'}}" class="state">
+    <view class="state__text">{{error}}</view>
+    <view class="gap-24"></view>
+    <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="load">重新加载</view>
+  </view>
+
+  <view wx:elif="{{total === 0}}" class="state">
+    <view class="state__text">还没有错题。考完试后答错的题目会自动进这里。</view>
+  </view>
+
+  <block wx:else>
+    <view class="wb">
+      <view class="wb__head">
+        <text class="wb__count num">{{total}}</text>
+        <text class="wb__label">道错题 · 按知识点归类</text>
+      </view>
+
+      <view wx:for="{{groups}}" wx:for-index="gi" wx:key="knowledge">
+        <view class="group__title">
+          <text>{{item.knowledge}}</text>
+          <text class="group__n">{{item.items.length}} 题</text>
+        </view>
+
+        <view wx:for="{{item.items}}" wx:for-item="q" wx:for-index="qi" wx:key="id" class="wq">
+          <view class="wq__head" data-gi="{{gi}}" data-qi="{{qi}}" bindtap="toggle">
+            <view class="grow">
+              <view class="wq__stem">{{q.stem}}</view>
+              <view class="wq__meta">
+                <text class="wq__tag">{{q.type}}</text>
+                <text class="wq__dot">·</text>
+                <text>错 {{q.times}} 次</text>
+                <text class="wq__dot">·</text>
+                <text class="{{q.status === '已掌握' ? 'wq__status--ok' : 'wq__status'}}">{{q.status}}</text>
+              </view>
+            </view>
+            <text class="wq__chev {{q.open ? 'wq__chev--open' : ''}}">›</text>
+          </view>
+
+          <view wx:if="{{q.open}}" class="wq__body">
+            <view wx:for="{{q.options}}" wx:for-item="opt" wx:key="key" class="wq__opt">
+              <text class="wq__opt-key">{{opt.key}}</text>
+              <text class="wq__opt-text">{{opt.text}}</text>
+            </view>
+            <view class="wq__answer">正确答案 <text class="ok-text">{{q.answerText}}</text></view>
+            <view wx:if="{{q.explain}}" class="wq__explain">
+              <text class="wq__explain-label">解析</text>
+              <text>{{q.explain}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="wb__note">连续两次答对，这道题会自动标为「已掌握」。</view>
+      <view class="safe-bottom"></view>
+    </view>
+  </block>
+</view>

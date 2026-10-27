@@ -1,0 +1,91 @@
+<!-- 成绩与解析 -->
+<view class="page page--sheet">
+  <view wx:if="{{state === 'loading'}}" class="state">
+    <view class="spinner"></view>
+    <view class="state__text">正在出分…</view>
+  </view>
+
+  <view wx:elif="{{state === 'error'}}" class="state">
+    <view class="state__text">{{error}}</view>
+    <view class="gap-24"></view>
+    <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="goBack">返回</view>
+  </view>
+
+  <block wx:else>
+    <!-- 判分结果 -->
+    <view class="verdict {{attempt.passed ? 'verdict--pass' : 'verdict--fail'}}">
+      <view class="verdict__exam">{{exam.name}}</view>
+      <view class="verdict__main">
+        <view class="verdict__score">
+          <text class="verdict__value num">{{attempt.score}}</text>
+          <text class="verdict__unit">分</text>
+        </view>
+        <view class="verdict__flag">{{attempt.passed ? '及格' : '未及格'}}</view>
+      </view>
+      <view class="verdict__meta">
+        <text>答对 {{summary.right}} / {{summary.total}}</text>
+        <text class="verdict__dot">·</text>
+        <text>用时 {{attempt.minutes}} 分钟</text>
+        <text class="verdict__dot">·</text>
+        <text>及格线 {{exam.passScore}}</text>
+        <text class="verdict__dot">·</text>
+        <text>第 {{attempt.attemptNo}} 次</text>
+      </view>
+    </view>
+
+    <view class="review__head">
+      <text class="sect__title">逐题解析</text>
+      <text class="sect__hint">错 {{summary.wrong}} 题</text>
+    </view>
+
+    <view wx:for="{{items}}" wx:key="no" class="item">
+      <view class="item__head">
+        <text class="item__no num {{item.correct ? 'item__no--ok' : 'item__no--bad'}}">{{item.no}}</text>
+        <view class="grow">
+          <view class="item__stem">{{item.stem}}</view>
+          <view class="item__tags">
+            <text class="tag tag--outline">{{item.type}}</text>
+            <text class="tag tag--outline">{{item.knowledge}}</text>
+            <text class="item__mark {{item.correct ? 'item__mark--ok' : 'item__mark--bad'}}">{{item.correct ? '答对' : '答错'}} +{{item.score}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="item__options">
+        <view
+          wx:for="{{item.options}}"
+          wx:for-item="opt"
+          wx:key="key"
+          class="opt {{opt.state === 'right' ? 'opt--right' : ''}} {{opt.state === 'wrong' ? 'opt--wrong' : ''}}"
+        >
+          <text class="opt__key">{{opt.key}}</text>
+          <text class="opt__text">{{opt.text}}</text>
+          <text wx:if="{{opt.state === 'right'}}" class="opt__mark opt__mark--ok">正确</text>
+          <text wx:elif="{{opt.state === 'wrong'}}" class="opt__mark opt__mark--bad">你选的</text>
+        </view>
+      </view>
+
+      <view class="item__answer">
+        <text>正确答案 <text class="item__ans-ok">{{item.answerText}}</text></text>
+        <text class="item__ans-sep">·</text>
+        <text>你的答案 <text class="{{item.correct ? 'item__ans-ok' : 'item__ans-bad'}}">{{item.mineText}}</text></text>
+      </view>
+
+      <view wx:if="{{item.explain}}" class="item__explain">
+        <text class="item__explain-label">解析</text>
+        <text>{{item.explain}}</text>
+      </view>
+    </view>
+
+    <view class="review__note">
+      对成绩有异议，可带着这份解析找店长复核，后台保留你的作答记录与提交时间。
+    </view>
+    <view class="safe-bottom"></view>
+    <view class="safe-bottom"></view>
+
+    <view class="footer-bar">
+      <view class="btn btn--plain footer-bar__sub" hover-class="btn-hover" bindtap="goWrongbook">看错题</view>
+      <view class="btn btn--primary grow" hover-class="btn-hover" bindtap="goBack">返回课程</view>
+    </view>
+  </block>
+</view>

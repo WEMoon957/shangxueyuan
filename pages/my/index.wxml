@@ -1,0 +1,104 @@
+<!-- 我的 -->
+<view class="page">
+  <view wx:if="{{state === 'loading'}}" class="state">
+    <view class="spinner"></view>
+    <view class="state__text">正在加载…</view>
+  </view>
+
+  <view wx:elif="{{state === 'error'}}" class="state">
+    <view class="state__text">{{error}}</view>
+    <view class="gap-24"></view>
+    <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="load">重新加载</view>
+  </view>
+
+  <block wx:else>
+    <!-- 个人信息 -->
+    <view class="head">
+      <view class="wrap">
+        <view class="row">
+          <view class="head__avatar">{{user.initial}}</view>
+          <view class="grow head__info">
+            <view class="head__name">{{user.name}}</view>
+            <view class="head__org">{{user.storeName}} · {{user.position}}</view>
+          </view>
+        </view>
+
+        <view class="head__stats">
+          <view class="head__stat"><text class="head__value num">{{user.finishedCourses}}</text><text class="head__label">已完成课程</text></view>
+          <view class="head__divider"></view>
+          <view class="head__stat"><text class="head__value num">{{user.avgScore}}</text><text class="head__label">考试平均分</text></view>
+          <view class="head__divider"></view>
+          <view class="head__stat"><text class="head__value num">{{user.points}}</text><text class="head__label">累计积分</text></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 快捷入口 -->
+    <view class="block">
+      <view class="entry" hover-class="entry--hover" bindtap="goWrongbook">
+        <text class="entry__label">错题本</text>
+        <text class="entry__meta">{{wrongCount}} 道待复习</text>
+        <text class="entry__chev">›</text>
+      </view>
+      <view class="entry" hover-class="entry--hover" bindtap="goLearning">
+        <text class="entry__label">学习中</text>
+        <text class="entry__meta">{{stats.learning}} 门未完成</text>
+        <text class="entry__chev">›</text>
+      </view>
+      <view class="entry" hover-class="entry--hover" bindtap="goCerts">
+        <text class="entry__label">证书</text>
+        <text class="entry__meta">{{certs.length}} 张</text>
+        <text class="entry__chev">›</text>
+      </view>
+    </view>
+
+    <!-- 证书 -->
+    <view wx:if="{{certs.length}}" class="block">
+      <view class="block__head"><text class="sect__title">我的证书</text></view>
+      <view wx:for="{{certs}}" wx:key="id" class="cert">
+        <view class="cert__badge">{{item.level}}</view>
+        <view class="grow">
+          <view class="cert__name">{{item.name}}</view>
+          <view class="cert__meta">{{item.no}} · {{item.dateText}} 颁发</view>
+        </view>
+        <text class="tag tag--ok">{{item.status}}</text>
+      </view>
+    </view>
+
+    <!-- 成绩 -->
+    <view class="block">
+      <view class="block__head">
+        <text class="sect__title">考试成绩</text>
+        <text class="sect__hint">共 {{attempts.length}} 次</text>
+      </view>
+      <view wx:if="{{attempts.length === 0}}" class="block__empty">还没有考试记录，学完课程后就能参加结业考试。</view>
+      <view
+        wx:for="{{attempts}}"
+        wx:key="id"
+        class="attempt"
+        hover-class="entry--hover"
+        data-id="{{item.id}}"
+        bindtap="openResult"
+      >
+        <text class="attempt__score num {{item.passed ? 'attempt__score--ok' : 'attempt__score--bad'}}">{{item.score}}</text>
+        <view class="grow">
+          <view class="attempt__name ellipsis">{{item.examName}}</view>
+          <view class="attempt__meta">{{item.dateText}} · 第 {{item.attemptNo}} 次 · 用时 {{item.minutes}} 分钟</view>
+        </view>
+        <text class="tag {{item.passed ? 'tag--ok' : 'tag--warn'}}">{{item.passed ? '及格' : '未及格'}}</text>
+      </view>
+    </view>
+
+    <!-- 演示模式 -->
+    <view wx:if="{{demo}}" class="block">
+      <view class="block__head"><text class="sect__title">演示模式</text></view>
+      <view class="block__text">
+        当前使用飞书多维表格的快照数据，绑定、学习、考试都不会写入飞书。配置云开发环境 ID、部署 api 云函数后自动切换为真实数据。
+      </view>
+      <view class="btn btn--plain block__btn" hover-class="btn-hover" bindtap="resetDemo">重置演示数据</view>
+    </view>
+
+    <view class="foot">门店商学院 · V{{version}}</view>
+    <view class="safe-bottom"></view>
+  </block>
+</view>

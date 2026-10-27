@@ -1,0 +1,58 @@
+<!-- 课件学习 -->
+<view class="page page--sheet">
+  <view wx:if="{{state === 'loading'}}" class="state">
+    <view class="spinner"></view>
+    <view class="state__text">正在准备课件…</view>
+  </view>
+
+  <view wx:elif="{{state === 'error'}}" class="state">
+    <view class="state__text">{{error}}</view>
+    <view class="gap-24"></view>
+    <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="back">返回课程</view>
+  </view>
+
+  <block wx:else>
+    <view class="reader">
+      <view class="reader__code">{{course.code}} · 标准学时 {{course.minutes}} 分钟</view>
+      <view class="reader__title">{{course.name}}</view>
+    </view>
+
+    <!-- 计时 -->
+    <view class="clock">
+      <view class="clock__label">本次学习</view>
+      <view class="clock__value num">{{timeText}}</view>
+      <view class="clock__bar">
+        <view class="clock__bar-fill" style="width: {{progressPercent}}%"></view>
+      </view>
+      <view class="clock__hint">{{hint}}</view>
+    </view>
+
+    <!-- 课件 -->
+    <view class="sect">
+      <view class="sect__head">
+        <text class="sect__title">课件</text>
+        <text class="sect__hint">{{wares.length}} 个文件</text>
+      </view>
+      <view wx:if="{{wares.length === 0}}" class="sect__empty">还没有上传课件，先联系门店管理员。</view>
+      <view wx:for="{{wares}}" wx:key="token" class="file">
+        <view class="file__ext">{{item.ext}}</view>
+        <view class="grow">
+          <view class="file__name ellipsis">{{item.name}}</view>
+          <view class="file__meta">{{item.sizeText}}</view>
+        </view>
+      </view>
+      <view class="sect__note">课件原件在飞书文档中打开，边看边在这里计时；学完点下方按钮记录完成。</view>
+    </view>
+
+    <view class="safe-bottom"></view>
+    <view class="safe-bottom"></view>
+
+    <view class="footer-bar">
+      <view
+        class="btn btn--primary grow {{canFinish ? '' : 'btn--disabled'}}"
+        hover-class="{{canFinish ? 'btn-hover' : ''}}"
+        bindtap="finish"
+      >{{finishText}}</view>
+    </view>
+  </block>
+</view>

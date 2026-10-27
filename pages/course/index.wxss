@@ -1,0 +1,94 @@
+/* 课程详情：一张白纸 + 细线分区 */
+.page--sheet {
+    padding-bottom: 220rpx;
+}
+
+/* 课程头 */
+.hero {
+    padding: 32rpx 32rpx 36rpx;
+}
+
+.hero__tags {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+}
+
+.hero__title {
+    margin-top: 20rpx;
+    font-size: 44rpx;
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: 0.2rpx;
+    color: #10182B;
+}
+
+.hero__meta {
+    margin-top: 12rpx;
+    font-size: 24rpx;
+    color: #6B7686;
+}
+
+.hero__intro {
+    margin-top: 24rpx;
+    font-size: 28rpx;
+    line-height: 1.75;
+    color: #4B5566;
+}
+
+/* 课件行 */
+.file {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    margin-top: 24rpx;
+}
+
+.file__ext {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: 12rpx;
+    border: 2rpx solid #E3E7EE;
+    color: #4B5566;
+    font-size: 20rpx;
+    font-weight: 600;
+    letter-spacing: 0.5rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.file__name {
+    font-size: 28rpx;
+    font-weight: 500;
+    color: #10182B;
+    max-width: 480rpx;
+}
+
+.file__meta {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: #6B7686;
+}
+
+/* 考试事实行 */
+.exam-facts {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 16rpx;
+    font-size: 28rpx;
+    color: #10182B;
+}
+
+.exam-facts__item {
+    font-variant-numeric: tabular-nums;
+}
+
+/* 底部操作 */
+.footer-bar__sub {
+    width: 200rpx;
+    flex-shrink: 0;
+    font-size: 28rpx;
+}

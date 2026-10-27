@@ -1,0 +1,99 @@
+/* 课件学习：计时是本页的主角 */
+.page--sheet {
+    padding-bottom: 220rpx;
+}
+
+.reader {
+    padding: 36rpx 32rpx 0;
+}
+
+.reader__code {
+    font-size: 24rpx;
+    color: #6B7686;
+}
+
+.reader__title {
+    margin-top: 10rpx;
+    font-size: 44rpx;
+    font-weight: 700;
+    line-height: 1.28;
+    color: #10182B;
+}
+
+/* 计时块 */
+.clock {
+    padding: 76rpx 32rpx 72rpx;
+    text-align: center;
+}
+
+.clock__label {
+    font-size: 24rpx;
+    color: #6B7686;
+}
+
+.clock__value {
+    margin-top: 6rpx;
+    font-size: 96rpx;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 1rpx;
+    color: #10182B;
+}
+
+.clock__bar {
+    margin: 28rpx auto 0;
+    max-width: 480rpx;
+    height: 6rpx;
+    border-radius: 6rpx;
+    background: #E6E9EF;
+    overflow: hidden;
+}
+
+.clock__bar-fill {
+    height: 100%;
+    border-radius: 6rpx;
+    background: #2F5BFF;
+    transition: width 0.4s ease;
+}
+
+.clock__hint {
+    margin-top: 20rpx;
+    font-size: 24rpx;
+    color: #4B5566;
+}
+
+/* 课件行 */
+.file {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    margin-top: 24rpx;
+}
+
+.file__ext {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: 12rpx;
+    border: 2rpx solid #E3E7EE;
+    color: #4B5566;
+    font-size: 20rpx;
+    font-weight: 600;
+    letter-spacing: 0.5rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.file__name {
+    font-size: 28rpx;
+    font-weight: 500;
+    color: #10182B;
+    max-width: 480rpx;
+}
+
+.file__meta {
+    margin-top: 4rpx;
+    font-size: 22rpx;
+    color: #6B7686;
+}

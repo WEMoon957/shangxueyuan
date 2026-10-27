@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/course/index",
+    "pages/reader/index",
+    "pages/exam/index",
+    "pages/result/index",
+    "pages/wrongbook/index",
+    "pages/bind/index",
+    "pages/my/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "门店商学院",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F4F6FB"
+  },
+  "tabBar": {
+    "color": "#9AA3B2",
+    "selectedColor": "#2E5BFF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "学习"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

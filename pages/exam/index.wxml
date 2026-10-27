@@ -1,0 +1,81 @@
+<!-- 考试答题 -->
+<view class="page exam">
+  <view wx:if="{{state === 'loading'}}" class="state">
+    <view class="spinner"></view>
+    <view class="state__text">正在发卷…</view>
+  </view>
+
+  <view wx:elif="{{state === 'error'}}" class="state">
+    <view class="state__text">{{error}}</view>
+    <view class="gap-24"></view>
+    <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="back">返回</view>
+  </view>
+
+  <block wx:else>
+    <!-- 顶部信息条 -->
+    <view class="bar">
+      <view class="bar__count">
+        <text class="bar__no num">{{current + 1}}</text>
+        <text class="bar__total">/ {{questions.length}}</text>
+      </view>
+      <view class="bar__timer {{remaining <= 60 ? 'bar__timer--urgent' : ''}}">
+        <text class="bar__timer-label">剩余</text>
+        <text class="bar__timer-value num">{{timeText}}</text>
+      </view>
+    </view>
+
+    <!-- 题号条 -->
+    <scroll-view class="strip" scroll-x>
+      <view class="strip__inner">
+        <view
+          wx:for="{{cardItems}}"
+          wx:key="no"
+          class="strip__item {{item.answered ? 'strip__item--done' : ''}} {{item.current ? 'strip__item--on' : ''}}"
+          data-index="{{index}}"
+          bindtap="jump"
+        >{{item.no}}</view>
+      </view>
+    </scroll-view>
+
+    <scroll-view class="exam__scroll" scroll-y scroll-top="{{scrollTop}}">
+      <view class="q">
+        <view class="q__meta">
+          <text class="tag tag--outline">{{currentQuestion.typeText}}</text>
+          <text class="q__points num">{{currentQuestion.points}} 分</text>
+        </view>
+        <view class="q__stem">{{currentQuestion.stem}}</view>
+        <view class="q__hint">{{currentQuestion.hintText}}</view>
+      </view>
+
+      <view class="options">
+        <view
+          wx:for="{{currentQuestion.options}}"
+          wx:key="key"
+          class="option {{item.checked ? 'option--on' : ''}}"
+          hover-class="option--hover"
+          data-key="{{item.key}}"
+          bindtap="choose"
+        >
+          <view class="option__key {{item.checked ? 'option__key--on' : ''}}">{{item.key}}</view>
+          <view class="option__text">{{item.text}}</view>
+        </view>
+      </view>
+
+      <view class="exam__tip">全程计时，切换小程序会被记录；成绩与切屏情况会进入门店学习档案。</view>
+      <view class="safe-bottom"></view>
+      <view class="safe-bottom"></view>
+    </scroll-view>
+
+    <!-- 底部操作 -->
+    <view class="footer-bar">
+      <view class="btn btn--plain exam__nav" hover-class="btn-hover" bindtap="prev">上一题</view>
+      <view
+        wx:if="{{current < questions.length - 1}}"
+        class="btn btn--primary grow"
+        hover-class="btn-hover"
+        bindtap="next"
+      >下一题</view>
+      <view wx:else class="btn btn--primary grow" hover-class="btn-hover" bindtap="confirmSubmit">交卷</view>
+    </view>
+  </block>
+</view>

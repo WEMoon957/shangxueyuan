@@ -1,0 +1,371 @@
+/**
+ * 门店商学院 · 全局样式
+ *
+ * 刻度：字号 22/24/28/32/44；圆角 8/16/24/999；间距 8/16/24/32/40/48；分隔一律用 2rpx 细线。
+ * 颜色：#10182B 正文、#4B5566 次要、#6B7686 说明（对白底 4.7:1）、#2F5BFF 主色。
+ * 不依赖 CSS 变量，全部字面量，避免不同编译器/内核的解析差异。
+ */
+page {
+    background: #F5F6F8;
+    color: #10182B;
+    font-size: 28rpx;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+view, text, scroll-view, button, input, textarea {
+    box-sizing: border-box;
+}
+
+/* ---------------- 布局 ---------------- */
+.page {
+    min-height: 100vh;
+    padding-bottom: 40rpx;
+}
+
+.wrap {
+    padding: 0 32rpx;
+}
+
+.safe-bottom {
+    height: calc(24rpx + env(safe-area-inset-bottom));
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.row-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.row-top {
+    display: flex;
+    align-items: flex-start;
+}
+
+.grow {
+    flex: 1;
+    min-width: 0;
+}
+
+.gap-8 { height: 8rpx; }
+.gap-16 { height: 16rpx; }
+.gap-24 { height: 24rpx; }
+.gap-32 { height: 32rpx; }
+.gap-40 { height: 40rpx; }
+
+/* ---------------- 面与线 ---------------- */
+.card {
+    background: #FFFFFF;
+    border-radius: 24rpx;
+    padding: 32rpx;
+    box-shadow: 0 8rpx 24rpx rgba(16, 24, 43, 0.05);
+}
+
+.surface {
+    background: #FFFFFF;
+}
+
+/* 细线分隔的行：替代一层层卡片 */
+.line {
+    border-bottom: 2rpx solid #EDF0F6;
+}
+
+.line:last-child {
+    border-bottom: none;
+}
+
+.sect {
+    padding: 36rpx 32rpx;
+    border-top: 2rpx solid #EDF0F6;
+}
+
+.sect__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sect__title {
+    font-size: 28rpx;
+    font-weight: 600;
+    color: #10182B;
+}
+
+.sect__value {
+    font-size: 36rpx;
+    font-weight: 700;
+    color: #2F5BFF;
+    line-height: 1;
+}
+
+.sect__unit {
+    margin-left: 2rpx;
+    font-size: 24rpx;
+    font-weight: 600;
+}
+
+.sect__hint {
+    font-size: 24rpx;
+    color: #6B7686;
+}
+
+.sect__head + .progress {
+    margin-top: 32rpx;
+}
+
+.sect__meta {
+    display: flex;
+    align-items: center;
+    margin-top: 16rpx;
+    font-size: 24rpx;
+    color: #6B7686;
+}
+
+.sect__dot {
+    margin: 0 10rpx;
+    color: #BFC5D1;
+}
+
+.sect__state {
+    color: #2F5BFF;
+}
+
+.sect__state--ok {
+    color: #0E8F65;
+}
+
+.sect__note {
+    margin-top: 20rpx;
+    font-size: 22rpx;
+    line-height: 1.7;
+    color: #6B7686;
+}
+
+.sect__empty {
+    margin-top: 16rpx;
+    font-size: 24rpx;
+    line-height: 1.6;
+    color: #6B7686;
+}
+
+/* 整页白底：把长内容做成一张纸，用细线分区，而不是一层层卡片 */
+.page--sheet {
+    background: #FFFFFF;
+}
+
+/* ---------------- 文字 ---------------- */
+.d1 {
+    font-size: 44rpx;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.2rpx;
+}
+
+.h2 {
+    font-size: 32rpx;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.h3 {
+    font-size: 28rpx;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.body {
+    font-size: 28rpx;
+    line-height: 1.6;
+    color: #4B5566;
+}
+
+.muted {
+    color: #4B5566;
+}
+
+/* 说明文字：对白底 4.7:1 */
+.tiny {
+    font-size: 24rpx;
+    line-height: 1.5;
+    color: #6B7686;
+}
+
+.strong {
+    font-weight: 600;
+    color: #10182B;
+}
+
+.num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.clamp-2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+/* ---------------- 标签 ---------------- */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    height: 36rpx;
+    padding: 0 12rpx;
+    border-radius: 8rpx;
+    font-size: 22rpx;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.tag--brand {
+    background: #EBEFFF;
+    color: #2448D8;
+}
+
+.tag--ok {
+    background: #E6F6EF;
+    color: #0E8F65;
+}
+
+.tag--warn {
+    background: #FDF3E3;
+    color: #9A5B00;
+}
+
+.tag--muted {
+    background: #EFF1F5;
+    color: #4B5566;
+}
+
+.tag--danger {
+    background: #FCECEB;
+    color: #C42B20;
+}
+
+/* 细描边标签，用于需要更轻的场合 */
+.tag--outline {
+    background: transparent;
+    border: 2rpx solid #DDE1E9;
+    color: #4B5566;
+}
+
+/* ---------------- 按钮 ---------------- */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88rpx;
+    border-radius: 16rpx;
+    font-size: 30rpx;
+    font-weight: 600;
+    background: #FFFFFF;
+    color: #10182B;
+}
+
+.btn--primary {
+    background: #2F5BFF;
+    color: #FFFFFF;
+    box-shadow: 0 8rpx 20rpx rgba(47, 91, 255, 0.22);
+}
+
+.btn--ghost {
+    background: transparent;
+    color: #2F5BFF;
+    border: 2rpx solid #C7D3FF;
+}
+
+.btn--plain {
+    background: #ECEEF2;
+    color: #4B5566;
+}
+
+.btn--sm {
+    height: 64rpx;
+    padding: 0 24rpx;
+    border-radius: 12rpx;
+    font-size: 26rpx;
+    box-shadow: none;
+}
+
+.btn--disabled {
+    background: #E6E8ED !important;
+    color: #9AA1AE !important;
+    box-shadow: none !important;
+}
+
+.btn-hover {
+    opacity: 0.9;
+}
+
+/* ---------------- 进度 ---------------- */
+.progress {
+    height: 6rpx;
+    border-radius: 6rpx;
+    background: #E6E9EF;
+    overflow: hidden;
+}
+
+.progress__bar {
+    height: 100%;
+    border-radius: 6rpx;
+    background: #2F5BFF;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------------- 状态 ---------------- */
+.state {
+    padding: 120rpx 48rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.state__text {
+    margin-top: 20rpx;
+    font-size: 26rpx;
+    line-height: 1.6;
+    color: #6B7686;
+    text-align: center;
+}
+
+.spinner {
+    width: 44rpx;
+    height: 44rpx;
+    border: 4rpx solid #E2E5EC;
+    border-top-color: #2F5BFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------------- 底部固定操作栏 ---------------- */
+.footer-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+    background: #FFFFFF;
+    border-top: 2rpx solid #E8EBF1;
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    z-index: 20;
+}

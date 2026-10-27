@@ -1,0 +1,101 @@
+<!-- 课程详情 -->
+<view class="page page--sheet">
+  <view wx:if="{{state === 'loading'}}" class="state">
+    <view class="spinner"></view>
+    <view class="state__text">正在加载课程…</view>
+  </view>
+
+  <view wx:elif="{{state === 'error'}}" class="state">
+    <view class="state__text">{{error}}</view>
+    <view class="gap-24"></view>
+    <view class="btn btn--ghost btn--sm" hover-class="btn-hover" bindtap="reload">重新加载</view>
+  </view>
+
+  <block wx:else>
+    <view>
+      <!-- 课程头 -->
+      <view class="hero">
+        <view class="hero__tags">
+          <text class="tag tag--outline">{{course.category}}</text>
+          <text wx:if="{{course.mustLearn}}" class="tag tag--warn">必修</text>
+          <text class="tag tag--outline">{{course.level}}</text>
+        </view>
+        <view class="hero__title">{{course.name}}</view>
+        <view class="hero__meta">{{course.code}} · 标准学时 {{course.minutes}} 分钟</view>
+        <view wx:if="{{course.intro}}" class="hero__intro">{{course.intro}}</view>
+      </view>
+
+      <!-- 学习进度 -->
+      <view class="sect">
+        <view class="sect__head">
+          <text class="sect__title">学习进度</text>
+          <text class="sect__value num">{{progress.percent}}<text class="sect__unit">%</text></text>
+        </view>
+        <view class="progress">
+          <view class="progress__bar" style="width: {{progress.percent}}%"></view>
+        </view>
+        <view class="sect__meta">
+          <text>已累计 {{progress.minutes}} 分钟</text>
+          <text class="sect__dot">·</text>
+          <text class="sect__state {{progress.status === '已完成' ? 'sect__state--ok' : ''}}">{{progress.status}}</text>
+        </view>
+      </view>
+
+      <!-- 课件 -->
+      <view class="sect">
+        <view class="sect__head">
+          <text class="sect__title">课件</text>
+          <text class="sect__hint">{{wares.length}} 个文件</text>
+        </view>
+        <view wx:if="{{wares.length === 0}}" class="sect__empty">这门课程还没有上传课件，联系门店管理员补充。</view>
+        <view wx:for="{{wares}}" wx:key="token" class="file">
+          <view class="file__ext">{{item.ext}}</view>
+          <view class="grow">
+            <view class="file__name ellipsis">{{item.name}}</view>
+            <view class="file__meta">{{item.sizeText}} · 学习时长自动记录</view>
+          </view>
+        </view>
+        <view class="sect__note">课件原件在飞书文档里，可对照学习；学完回到这里点「标记为已学完」。</view>
+      </view>
+
+      <!-- 考试 -->
+      <view wx:if="{{exam}}" class="sect">
+        <view class="sect__head">
+          <text class="sect__title">结业考试</text>
+          <text class="tag {{exam.passed ? 'tag--ok' : (exam.attemptsLeft ? 'tag--brand' : 'tag--danger')}}">
+            {{exam.passed ? '已通过' : (exam.attemptsLeft ? '待考试' : '机会用完')}}
+          </text>
+        </view>
+        <view class="exam-facts">
+          <text class="exam-facts__item">{{exam.questionCount}} 题</text>
+          <text class="sect__dot">·</text>
+          <text class="exam-facts__item">{{exam.duration}} 分钟</text>
+          <text class="sect__dot">·</text>
+          <text class="exam-facts__item">{{exam.passScore}} 分及格</text>
+          <text class="sect__dot">·</text>
+          <text class="exam-facts__item">剩 {{exam.attemptsLeft}} 次机会</text>
+        </view>
+        <view wx:if="{{exam.bestScore}}" class="sect__meta">最好成绩 {{exam.bestScore}} 分 · 共 {{exam.maxAttempts}} 次机会</view>
+        <view class="sect__note">限时 {{exam.duration}} 分钟，超时自动交卷；交卷立刻出分，成绩计入学习档案。</view>
+      </view>
+
+      <view class="safe-bottom"></view>
+      <view class="safe-bottom"></view>
+    </view>
+
+    <!-- 底部操作 -->
+    <view class="footer-bar">
+      <view
+        wx:if="{{secondaryText}}"
+        class="btn btn--plain footer-bar__sub"
+        hover-class="btn-hover"
+        bindtap="onSecondary"
+      >{{secondaryText}}</view>
+      <view
+        class="btn btn--primary grow {{primaryDisabled ? 'btn--disabled' : ''}}"
+        hover-class="{{primaryDisabled ? '' : 'btn-hover'}}"
+        bindtap="onPrimary"
+      >{{primaryText}}</view>
+    </view>
+  </block>
+</view>

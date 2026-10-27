@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "门店商学院",
+  "navigationBarBackgroundColor": "#2F5BFF",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#2F5BFF",
+  "backgroundColorTop": "#2F5BFF",
+  "backgroundTextStyle": "light",
+  "enablePullDownRefresh": true
+}
