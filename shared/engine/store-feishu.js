@@ -61,9 +61,24 @@ function createFeishuStore(options) {
         return '/open-apis/bitable/v1/apps/' + appToken + '/tables/' + tableId(key);
     }
 
+    /**
+     * 读出来就统一成内存仓库的形态：关联是 id 数组、单选是字符串。
+     * 飞书原始返回里关联字段是 { link_record_ids: [...] }，直接做等值比较永远匹配不上。
+     */
     function normalize(record) {
-        var out = util.withId(record.fields || {});
-        out._id = record.record_id || out._id;
+        var fields = record.fields || {};
+        var out = {};
+        for (var k in fields) {
+            var v = fields[k];
+            if (v && typeof v === 'object' && !Array.isArray(v)) {
+                if (v.link_record_ids) out[k] = v.link_record_ids.slice();
+                else if (v.record_ids) out[k] = v.record_ids.slice();
+                else out[k] = v;
+            } else {
+                out[k] = v;
+            }
+        }
+        out._id = record.record_id || '';
         return out;
     }
 

@@ -209,8 +209,14 @@ function sameValue(a, b) {
         }
         return true;
     }
-    if (typeof a === 'object') return sel(a) === text(b);
-    if (typeof b === 'object') return text(a) === sel(b);
+    if (typeof a === 'object') {
+        if (a.link_record_ids || a.record_ids) return linkIds(a).indexOf(text(b)) >= 0;
+        return sel(a) === text(b);
+    }
+    if (typeof b === 'object') {
+        if (b.link_record_ids || b.record_ids) return linkIds(b).indexOf(text(a)) >= 0;
+        return text(a) === sel(b);
+    }
     return String(a) === String(b);
 }
 
